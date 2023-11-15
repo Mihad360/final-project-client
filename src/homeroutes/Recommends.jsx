@@ -7,7 +7,7 @@ const Recommends = () => {
     const [menu, setMenu] = useState([])
 
     useEffect(() => {
-        fetch('/menu.json')
+        fetch('http://localhost:5000/menu')
         .then(res => res.json())
         .then(data => {
             const popular = data.filter(item => item.category === 'offered')

@@ -1,6 +1,26 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { Authcontext } from "../provider/Authprovider";
+import {useContext} from 'react'
+import Swal from "sweetalert2";
+import { CgProfile } from "react-icons/cg";
 
 const Navbar = () => {
+
+    const {user, logout} = useContext(Authcontext)
+
+    const handlelogout = () => {
+        logout()
+        .then(() => {
+            Swal.fire({
+                title: "Logged out!",
+                text: "Logged out successfully",
+                icon: "success"
+              });
+        })
+        .catch(() => {
+
+        })
+    }
 
     const links = <div>
         <div className="flex items-center gap-3 text-white">
@@ -59,7 +79,7 @@ const Navbar = () => {
 
     return (
         <div>
-            <div className="navbar px-10 fixed z-10 text-white bg-opacity-20 bg-black">
+            <div className="navbar px-10 fixed z-10 text-white bg-opacity-30 bg-black">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -71,14 +91,29 @@ const Navbar = () => {
                     </div>
                     <h1 className="normal-case text-xl font-bold">BISTRO BOSS <br /> Restaurant</h1>
                 </div>
-                <div className="navbar-end hidden lg:flex">
+                <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
                         {links}
                     </ul>
                 </div>
-                <div className="navbar-end">
+                <div className="navbar-end space-x-2">
+                    <div className="text-white">
+                        {
+                            user ? <div className="flex items-center gap-2">
+                                <p>{user.displayName}</p>
+                                <img className="w-10 rounded-full" src={user.photoURL} alt="" />
+                            </div> : <p className="text-3xl"><CgProfile /></p>
+                        }
+                    </div>
                     <img className="w-14 pr-3" src="https://i.ibb.co/MGtCm7R/151-1511569-cart-notifications-free-shopping-cart-favicon-hd-png-removebg-preview.png" alt="" />
-                    <button className="btn btn-ghost">Sign in</button>
+                    {
+                        user ? <Link >
+                        <button onClick={handlelogout} className="btn btn-outline  text-white">Sign out</button>
+                        </Link>
+                     : <Link to='/login'>
+                        <button className="btn btn-outline text-white">Sign in</button>
+                        </Link>
+                    }
                 </div>
             </div>
         </div>

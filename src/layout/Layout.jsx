@@ -1,8 +1,13 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Footer from "../homeroutes/Footer";
 import Navbar from "../homeroutes/Navbar";
 
 const Layout = () => {
+
+    const location = useLocation()
+    console.log(location)
+    const nofooter = location.pathname.includes('/login') || location.pathname.includes('/signup')
+
     return (
         <div className="font">
             <div>
@@ -12,7 +17,7 @@ const Layout = () => {
                 <Outlet></Outlet>
             </div>
             <div>
-                <Footer></Footer>
+                {nofooter || <Footer></Footer>}
             </div>
         </div>
     );

@@ -1,5 +1,6 @@
 
 // import Sectiontitle from "../components/Sectiontitle";
+import { Link } from "react-router-dom";
 import useMenu from "../hooks/Usemenu";
 import Menuitems from "../shared/Menuitems";
 
@@ -18,7 +19,9 @@ const Desert = () => {
                     }
                 </div>
             </div>
-            <h1 className="text-center font-semibold text-xl border-b-2 border-black w-96 mx-auto pb-3">ORDER YOUR FAVOURITE FOOD</h1>
+            <div className="text-center">
+            <Link to='/shop'><button className="text-center font-semibold text-lg border-b-2 border-black w-96 btn pb-3 ">ORDER YOUR FAVOURITE FOOD</button></Link>
+            </div>
         </div>
     );
 };

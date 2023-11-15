@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 
+
 const Menuitems = ({item}) => {
 
     // eslint-disable-next-line no-unused-vars
-    const {_id, name, recipe, image, category, price} = item;
+    const { name, recipe, image, category, price} = item;
 
     return (
         <div>
