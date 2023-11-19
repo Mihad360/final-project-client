@@ -8,7 +8,10 @@ import Orders from "../order/Orders";
 import Contact from "../contact/Contact";
 import Login from "../authentication/Login";
 import Signup from "../authentication/Signup";
+import Dashboard from "../layout/Dashboard";
+import Cart from "../pages/Cart";
 import Privateroute from "./Privateroute";
+import Allusers from "../pages/Allusers";
 
   const router = createBrowserRouter([
     {
@@ -25,7 +28,7 @@ import Privateroute from "./Privateroute";
         },
         {
           path: '/shop',
-          element: <Privateroute><Orders></Orders></Privateroute>
+          element: <Orders></Orders>
         },
         {
           path: '/contact',
@@ -41,6 +44,20 @@ import Privateroute from "./Privateroute";
         }
       ]
     },
+    {
+      path: '/dashboard',
+      element: <Privateroute><Dashboard></Dashboard></Privateroute>,
+      children: [
+        {
+          path: '/dashboard/cart',
+          element: <Cart></Cart>
+        },
+        {
+          path: '/dashboard/allusers',
+          element: <Allusers></Allusers>
+        }
+      ]
+    }
   ]);
 
 export default router;

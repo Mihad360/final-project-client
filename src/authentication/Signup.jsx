@@ -6,8 +6,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { Authcontext } from "../provider/Authprovider";
 import Swal from "sweetalert2";
 import { updateProfile } from "firebase/auth";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 const Signup = () => {
+
+    const axiosPublic = useAxiosPublic()
 
     const {createuser} = useContext(Authcontext)
     const navigate = useNavigate()
@@ -23,17 +26,30 @@ const Signup = () => {
              result.user.photoURL = data.photo
             const loggeduser = result.user;
             console.log(loggeduser)
-            Swal.fire({
-                title: "Signed up!",
-                text: "Successfully signed up",
-                icon: "success"
-              });
-              reset()
+            
               updateProfile(result.user, {
                 displayName: data.name,
                 photoURL: data.photo
               })
-              navigate('/')
+              .then(() => {
+                const userProfile = {
+                    name: data.name,
+                    email: data.email,
+                }
+                axiosPublic.post('/users', userProfile)
+                .then(res => {
+                    if(res.data.insertedId){
+                        Swal.fire({
+                            title: "Signed up!",
+                            text: "Successfully signed up",
+                            icon: "success"
+                          });
+                          reset()
+                          navigate('/')
+                    }
+                })
+              })
+              
               .catch(error => {
                 console.log(error)
               })
@@ -51,7 +67,7 @@ const Signup = () => {
                 </div>
                 <div className="font-semibold">
                     <div className="hero-content flex-col lg:flex-row-reverse">
-                        <div className="card flex-shrink-0 w-[500px] shadow-2xl bg-base-100">
+                        <div className="card flex-shrink-0 w-[500px] shadow-2xl bg-[#D1A054]">
                             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
                                 <div className="form-control">
                                     <label className="label">
