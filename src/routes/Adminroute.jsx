@@ -1,16 +1,17 @@
-/* eslint-disable react/prop-types */
 import { Navigate, useLocation } from "react-router-dom";
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css'
+import useAdmin from "../hooks/useAdmin";
 import useAuth from "../hooks/useAuth";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
-const Privateroute = ({ children }) => {
+const Adminroute = ({children}) => {
 
     const { user, loading } = useAuth()
-    const location = useLocation()
-    
+    const [isAdmin, isAdminloading] = useAdmin()
 
-    if (loading) {
+    const location = useLocation()
+
+
+    if (loading || isAdminloading) {
         return <div className="py-20 mx-20">
             <SkeletonTheme baseColor="#202020" highlightColor="#444">
                 <p>
@@ -20,11 +21,11 @@ const Privateroute = ({ children }) => {
         </div>
     }
 
-    if (user) {
+    if (user && isAdmin) {
         return children
     }
 
-    return <Navigate to='/login' state={{from: location}} replace></Navigate>
+    return <Navigate to='/' state={{ from: location }} replace></Navigate>
 };
 
-export default Privateroute;
+export default Adminroute;

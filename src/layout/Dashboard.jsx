@@ -8,10 +8,11 @@ import { TbBrandBooking } from "react-icons/tb";
 import { MdOutlineMenu } from "react-icons/md";
 import { FaBook, FaShoppingBag, FaUsers } from "react-icons/fa";
 import { BiSolidContact } from "react-icons/bi";
+import useAdmin from "../hooks/useAdmin";
 
 const Dashboard = () => {
 
-    const isAdmin = true;
+    const [isAdmin] = useAdmin();
 
     return (
         <div className="flex">
